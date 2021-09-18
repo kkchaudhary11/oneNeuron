@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import joblib
 from matplotlib.colors import ListedColormap
+import logging
 
 plt.style.use("fivethirtyeight")
 
@@ -16,6 +17,7 @@ def prepare_data(df):
   Returns:
       tuple: it returns the tuple of dependent and independent variables
   """
+  logging.info("Preparing the data of dependeing and independent model")
   X = df.drop("y", axis=1)
  
   y = df["y"]
@@ -27,12 +29,14 @@ def save_model(model, filename):
 
   Args:
       model (python object): trained model to 
-      filename (str): path to save model
+      filename (str): path to save modelp
   """
+  logging.info("saving the model")
   model_dir = "models"
   os.makedirs(model_dir, exist_ok=True)
   filePath = os.path.join(model_dir,filename)
   joblib.dump(model, filePath)
+  logging.info(f"saved the model at : {filePath}")
 
 def save_plot(df, filename, model):
   def _create_base_plot(df):
@@ -54,8 +58,8 @@ def save_plot(df, filename, model):
 
     xx1, xx2 = np.meshgrid(np.arange(x1_min, x1_max, resolution), 
                            np.arange(x2_min, x2_max, resolution))
-    print(xx1)
-    print(xx1.ravel())
+    logging.info(xx1)
+    logging.info(xx1.ravel())
     Z = classfier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)
     Z = Z.reshape(xx1.shape)
 
@@ -75,3 +79,4 @@ def save_plot(df, filename, model):
   os.makedirs(plot_dir, exist_ok=True) 
   plotPath = os.path.join(plot_dir, filename) 
   plt.savefig(plotPath)
+  logging.info(f"saving the plot {plotPath}")
