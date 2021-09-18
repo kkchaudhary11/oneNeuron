@@ -8,13 +8,27 @@ from matplotlib.colors import ListedColormap
 plt.style.use("fivethirtyeight")
 
 def prepare_data(df):
-  X = df.drop("y", axis=1)
+  """it is used to seperate the dependent and independent features
 
+  Args:
+     df (pd:DataFrame) : it is pandas dataFrame
+
+  Returns:
+      tuple: it returns the tuple of dependent and independent variables
+  """
+  X = df.drop("y", axis=1)
+ 
   y = df["y"]
 
   return X,y
 
 def save_model(model, filename):
+  """this will save the model created
+
+  Args:
+      model (python object): trained model to 
+      filename (str): path to save model
+  """
   model_dir = "models"
   os.makedirs(model_dir, exist_ok=True)
   filePath = os.path.join(model_dir,filename)
